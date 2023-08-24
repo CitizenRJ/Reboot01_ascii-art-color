@@ -1,4 +1,4 @@
-module asciiArtOutPut
+module asciiArtColor
 
 go 1.20
 

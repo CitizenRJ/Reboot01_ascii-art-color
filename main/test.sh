@@ -30,3 +30,5 @@ echo go run . "It's Working" thinkertoy
 echo "ascii-art-output: "
 echo go run . --output=banner.txt "hello" standard
 echo go run . --output=banner.txt "Hello There!" shadow
+echo go run . --output=banner.txt --color=red "Hello There!" shadow
+
