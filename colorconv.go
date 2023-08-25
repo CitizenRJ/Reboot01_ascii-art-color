@@ -77,6 +77,10 @@ func HextoRGB(hex string) []string {
 	if hex[0:1] == "#" {
 		hex = hex[1:]
 	}
+	if len(hex) > 6 {
+		fmt.Println("Error: Wrong number of hex characters.")
+			os.Exit(0)
+	} 
 	r := string(hex)[0:2]
 	g := string(hex)[2:4]
 	b := string(hex)[4:6]

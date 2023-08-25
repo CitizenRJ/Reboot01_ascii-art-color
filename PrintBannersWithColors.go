@@ -12,7 +12,9 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 	RGB := "rgb"
 	HEX := "#"
 	HSL := "hsl"
-	ResestColor := "\033[0m"
+	ANSI := "\\033["
+	ANSICheck := false
+	ResestColor := "\\033[0m"
 	var color []string
 	//this one for RGP to ansi nums.
 	if strings.HasPrefix(colors, RGB) {
@@ -23,13 +25,24 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 		//this one for HSL to ansi nums.
 	} else if strings.HasPrefix(colors, HSL) {
 		color = HSLtoRGB(colors)
-		//} else if ......... {
+	} else if strings.HasPrefix(colors, ANSI) {
+		// colors = colors
+		ANSICheck = true
 		//for ANSI
 	} else {
 		//for the left (word: red, green, blue, etc...).
 		color = WordColors(colors)
 	}
-	colors = "\033[38;2;" + color[0] + ";" + color[1] + ";" + color[2] + "m"
+	if !(ANSICheck) {
+		colors = "\033[38;2;" + color[0] + ";" + color[1] + ";" + color[2] + "m"
+	}
+	//  else {
+		// colorizeText(Str, colors, banners, arr)
+		// woo := Color(colors + "%s\033[0m")
+		// cccccc(Str, woo, banners, arr)
+		
+		// fmt.Print(colors)
+	// }
 	for _, ch := range banners {
 		num = num + 1
 		if ch == "" {
@@ -43,8 +56,8 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 		for i := 0; i < 8; i++ {
 			if Str == "" {
 				for _, j := range ch {
-				n := (j-32)*9 + 1
-				fmt.Print(colors, arr[int(n)+i])
+					n := (j-32)*9 + 1
+					fmt.Print(colors, arr[int(n)+i])
 				}
 			} else {
 				for _, j := range ch {
@@ -52,18 +65,70 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 					n := (j-32)*9 + 1
 					for _, kk := range Str {
 						if kk == j {
-								fmt.Print(colors, arr[int(n)+i])
-								check = false
+							fmt.Print(colors, arr[int(n)+i])
+							check = false
 						}
 					}
 					if check == true {
 						fmt.Print(ResestColor, arr[int(n)+i])
 					}
-					
+
 				}
 			}
-			
+
 			fmt.Println()
 		}
 	}
+	// fmt.Println(colors,"haha")
 }
+
+// func Color(colorString string) func(...interface{}) string {
+// 	sprint := func(args ...interface{}) string {
+// 		return fmt.Sprintf(colorString,
+// 			fmt.Sprint(args...))
+// 	}
+// 	return sprint
+// }
+
+// func cccccc(Str string, wooo func(...interface{}) string, banners, arr []string) {
+// 	ResestColor := "\\033[0m"
+// 	num := 0
+// 	fmt.Println(wooo("hello, world!"))
+// 	for _, ch := range banners {
+// 		num = num + 1
+// 		if ch == "" {
+// 			if num < len(banners) {
+// 				fmt.Println()
+// 				continue
+// 			} else {
+// 				continue
+// 			}
+// 		}
+// 		for i := 0; i < 8; i++ {
+// 			if Str == "" {
+// 				for _, j := range ch {
+// 					n := (j-32)*9 + 1
+// 					fmt.Print( wooo(arr[int(n)+i]))
+// 				}
+// 			} else {
+// 				for _, j := range ch {
+// 					check := true
+// 					n := (j-32)*9 + 1
+// 					for _, kk := range Str {
+// 						if kk == j {
+// 							fmt.Print(wooo(arr[int(n)+i]))
+// 							check = false
+// 						}
+// 					}
+// 					if check == true {
+// 						fmt.Print(ResestColor, arr[int(n)+i])
+// 					}
+
+// 				}
+// 			}
+
+// 			fmt.Println()
+// 		}
+// 	}
+
+// }

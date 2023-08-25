@@ -38,6 +38,7 @@ func main() {
 					outputFile = outputFileCheck(args[i])
 					help = help + 1
 				} else if strings.Contains(args[i], StrFlagArr[1]) {
+					ColorColor = ColorColorCheck(args[i])
 					help = help + 1
 				}
 			}
@@ -105,13 +106,46 @@ func main() {
 			fmt.Println("Error: Invalid arguments.")
 			return
 		} 
+	} else if ArgsLen == 5 {
+		help := 0
+		for i := 0; i < ArgsLen; i++ {
+			if strings.Contains(args[i], StrFlagArr[0]) {
+				if ColorColor == "" {
+					outputFile = outputFileCheck(args[i])
+				} else {
+					continue
+				}
+				help = (help + 1)
+			} else if strings.Contains(args[i], StrFlagArr[1]) {
+				ColorColor = ColorColorCheck(args[i])
+				if !(Fonts(args[ArgsLen-1])) && outputFile == "" {
+					fmt.Println(args[ArgsLen-1], "is Not a valid font.")
+					os.Exit(0)
+				} else if !(Fonts(args[ArgsLen-1])) && outputFile != "" {
+					args = append(args, "standard")
+					ArgsLen = len(args)
+				} else if i == 0 {
+					Str = args[i+1]
+						// Str = append(Str,args[i+1])
+				}
+				help = help + 1
+			}
+		}
+		if help == 0 {
+			fmt.Println("Error: Invalid arguments.")
+			return
+		} 
+	} else if ArgsLen > 5 {
+		fmt.Println("Error: Invalid arguments.")
+			return
 	}
+
 	for i:= 0; i < ArgsLen; i++ {
 		if !(asciiArtColor.IsValid(args[i])) {
 			fmt.Println(args[i],"isn't a valid character/argument.")
 			return
 		}
-	}
+	} 
 
 	text = args[ArgsLen-2]
 	if len(Str) > len(text) {
@@ -173,6 +207,7 @@ func Fonts(argFont string) bool {
 		argFont = "thinkertoy"
 	case "standard":
 		argFont = "standard"
+	default:
 		return false
 	}
 	return true
