@@ -74,7 +74,7 @@ func HSLtoRGB(hsl string) []string {
 		r = c
 		g = 0
 		b = x
-	case h > 360:
+	case h >= 360:
 		fmt.Println("Error: Wrong number of hsl characters.")
 			os.Exit(0)
 	}
