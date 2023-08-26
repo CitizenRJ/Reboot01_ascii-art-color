@@ -11,10 +11,13 @@ import (
 func HSLtoRGB(hsl string) []string {
 	var Crgb []int
 	num := ""
+	hsl = hsl[4:len(hsl)]
 	for i := 0; i < len(hsl); i++ {
-		if IsNumeric(string(hsl[i])) {
+		if hsl[i] == '%' || hsl[i] == ' ' {
+			continue
+		} else if IsNumeric(string(hsl[i])) {
 			num = num + string(hsl[i])
-		} else if !(IsNumeric(string(hsl[i]))) && num != "" {
+		} else if !(IsNumeric(string(hsl[i]))) && num != "" && !(IsAlpha(string(hsl[i]))) {
 			numCap, err := strconv.Atoi(num)
 			if err != nil {
 				fmt.Println("Error during hsl.")
@@ -22,9 +25,19 @@ func HSLtoRGB(hsl string) []string {
 			}
 			Crgb = append(Crgb, numCap)
 			num = ""
+		} else if (IsAlpha(string(hsl[i]))) && i > 2 {
+			fmt.Println("Error: during hsl.")
+			os.Exit(0)
+		} else if !(IsNumeric(string(hsl[i]))) && !(IsAlpha(string(hsl[i]))) && hsl[i] != ',' {
+			fmt.Println("Error, tf wrong w u.")
+			os.Exit(0)
 		} else {
 			continue
 		}
+	}
+	if len(Crgb) != 3 {
+		fmt.Println("Error, tf wrong w u.")
+		os.Exit(0)
 	}
 	h := Crgb[0]
 	s := Crgb[1]
@@ -61,6 +74,9 @@ func HSLtoRGB(hsl string) []string {
 		r = c
 		g = 0
 		b = x
+	case h > 360:
+		fmt.Println("Error: Wrong number of hsl characters.")
+			os.Exit(0)
 	}
 	R := int(math.Round((r + m) * 255))
 	G := int(math.Round((g + m) * 255))
@@ -77,10 +93,16 @@ func HextoRGB(hex string) []string {
 	if hex[0:1] == "#" {
 		hex = hex[1:]
 	}
-	if len(hex) > 6 {
+	if len(hex) != 6 {
 		fmt.Println("Error: Wrong number of hex characters.")
+		os.Exit(0)
+	}
+	for i := 0; i < len(hex); i++ {
+		if !(hex[i] == '0' && hex[i] <= '9') && !(hex[i] == 'A' && hex[i] <= 'F') {
+			fmt.Println("Error: Wrong number of hex characters.")
 			os.Exit(0)
-	} 
+		}
+	}
 	r := string(hex)[0:2]
 	g := string(hex)[2:4]
 	b := string(hex)[4:6]
@@ -98,13 +120,15 @@ func HextoRGB(hex string) []string {
 func RGBtoNum(hex string) []string {
 	var Crgb []string
 	num := ""
+	// fmt.Println()
+	hex = hex[4:len(hex)]
 	for i := 0; i < len(hex); i++ {
 		if IsNumeric(string(hex[i])) {
 			num = num + string(hex[i])
-		} else if !(IsNumeric(string(hex[i]))) && num != "" {
+		} else if !(IsNumeric(string(hex[i]))) && num != "" && !(IsAlpha(string(hex[i]))) {
 			numCap, err := strconv.Atoi(num)
 			if err != nil {
-				fmt.Println("Error during conversion in the Capitlizee.")
+				fmt.Println("Error during conversion in the RGB.")
 				os.Exit(0)
 			}
 			if numCap > 255 {
@@ -114,10 +138,22 @@ func RGBtoNum(hex string) []string {
 				Crgb = append(Crgb, num)
 				num = ""
 			}
-
+		} else if (IsAlpha(string(hex[i]))) {
+			fmt.Println("Error: during rgp (wrong input).")
+			os.Exit(0)
+		} else if !(IsNumeric(string(hex[i]))) && !(IsAlpha(string(hex[i]))) && hex[i] != ',' {
+			fmt.Println("Error, tf wrong w u, don't put things like that.")
+			os.Exit(0)
+		} else if hex[i] == ',' && num == "" {
+			fmt.Println("Error: during rgp.")
+			os.Exit(0)
 		} else {
 			continue
 		}
+	}
+	if len(Crgb) != 3 {
+		fmt.Println("Error, tf wrong w u, put only 3 خانات lol.")
+		os.Exit(0)
 	}
 	return Crgb
 }

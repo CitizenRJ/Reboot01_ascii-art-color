@@ -42,6 +42,12 @@ func WordColors(color string) []string {
 		os.Exit(1)
 	}
 	match := false
+	for j := 0; j < len(color); j++ {
+		if !(IsAlpha(string(color[j]))) {
+			fmt.Println("Error: wrong color name/type.")
+				os.Exit(0)
+		}
+	}
 	for i := 0; i < len(arr); i++ {
 		word := arr[i]
 		if color == word[0:len(color)] && len(word) == len(color)+9 {
