@@ -23,110 +23,97 @@ func main() {
 	text := ""
 	// var Str []string
 	Str := ""
+	haha := os.Args[1:]
 	// var color []string
 	if ArgsLen < 1 {
 		fmt.Println(len(os.Args), "is Not a valid amount of arguments.")
 		return
-	} else if ArgsLen == 2 || ArgsLen == 1 {
-		if ArgsLen == 1 {
-			args = append(args, "standard")
-			ArgsLen = len(args)
-		} else if ArgsLen == 2 {
-			help := 0
-			for i := 0; i < ArgsLen; i++ {
-				if strings.Contains(args[i], StrFlagArr[0]) {
-					outputFile = outputFileCheck(args[i])
-					help = help + 1
-				} else if strings.Contains(args[i], StrFlagArr[1]) {
-					ColorColor = ColorColorCheck(args[i])
-					help = help + 1
-				}
-			}
-			if help == 0 {
-				text = args[0]
-				font = args[1]
-			} else {
-				args = append(args, "standard")
-				ArgsLen = len(args)
-			}
-		}
-	} else if ArgsLen == 3 {
+	} else if ArgsLen > 0 && ArgsLen < 3 {
+		fmt.Println("check")
+		num := 0
 		help := 0
 		for i := 0; i < ArgsLen; i++ {
+			num = num + 1
 			if strings.Contains(args[i], StrFlagArr[0]) {
+				outputFile = outputFileCheck(args[i])
 				if ColorColor == "" {
-					outputFile = outputFileCheck(args[i])
-				} else {
-					continue
-				}
-				help = (help + 1)
-			} else if strings.Contains(args[i], StrFlagArr[1]) {
-				ColorColor = ColorColorCheck(args[i])
-				if !(Fonts(args[ArgsLen-1])) {
-					if i < ArgsLen-2 {
-						Str = args[i+1]
-						// Str = append(Str,args[i+1])
+					if i+1 < ArgsLen {
+						haha = append(haha[:num-1], haha[num:]...)
+						num = num - 1
+					} else {
+						haha = haha[:num-1]
 					}
-					args = append(args, "standard")
-					ArgsLen = len(args)
+
+					help = help + 1
+				} else {
+					outputFile = ""
+					continue
 				}
-				help = help + 1
+			} else if strings.Contains(args[i], StrFlagArr[1]) {
+				ColorColor = ColorColorCheck(args[i])
+				if outputFile == "" {
+					if i+1 < ArgsLen {
+						fmt.Println("try",haha)
+						haha = append(haha[:num-1], haha[num:]...)
+						fmt.Println("try",haha)
+						num = num - 1
+					} else {
+						haha = haha[:num-1]
+					}
+					help = help + 1
+				} else {
+					continue
+				}
 			}
 		}
 		if help == 0 {
-			fmt.Println("Error: Invalid arguments.")
-			return
+
 		}
-	} else if ArgsLen == 4 {
+	} else if ArgsLen > 2 && ArgsLen < 6 {
+		num := 0
 		help := 0
 		for i := 0; i < ArgsLen; i++ {
+			num = num + 1
 			if strings.Contains(args[i], StrFlagArr[0]) {
 				if ColorColor == "" {
 					outputFile = outputFileCheck(args[i])
+					if i+1 < ArgsLen {
+						haha = append(haha[:num-1], haha[num:]...)
+					} else {
+						haha = haha[:num-1]
+					}
+					num = num - 1
 				} else {
 					continue
 				}
 				help = (help + 1)
 			} else if strings.Contains(args[i], StrFlagArr[1]) {
 				ColorColor = ColorColorCheck(args[i])
-				if !(Fonts(args[ArgsLen-1])) && outputFile == "" {
-					fmt.Println(args[ArgsLen-1], "is Not a valid font.")
-					os.Exit(0)
-				} else if !(Fonts(args[ArgsLen-1])) && outputFile != "" {
-					args = append(args, "standard")
-					ArgsLen = len(args)
-				} else if i == 0 {
+				if outputFile == "" {
+					haha = append(haha[:num-1], haha[num:]...)
+					num = num - 1
+					if i+1 < ArgsLen {
+						Str = haha[num]
+						haha = append(haha[:num], haha[num+1:]...)
+						num = num - 1
+					} else {
+						haha = haha[:num]
+					}
+				} else if outputFile != "" {
+					if i+1 < ArgsLen {
+						haha = append(haha[:num], haha[num+1:]...)
+					} else {
+						haha = haha[:num]
+					}
+					num = num - 1
+				} else if i+1 < ArgsLen {
 					Str = args[i+1]
-					// Str = append(Str,args[i+1])
-				}
-				help = help + 1
-			}
-		}
-		if help == 0 {
-			fmt.Println("Error: Invalid arguments.")
-			return
-		}
-	} else if ArgsLen == 5 {
-		help := 0
-		for i := 0; i < ArgsLen; i++ {
-			if strings.Contains(args[i], StrFlagArr[0]) {
-				if ColorColor == "" {
-					outputFile = outputFileCheck(args[i])
-				} else {
-					continue
-				}
-				help = (help + 1)
-			} else if strings.Contains(args[i], StrFlagArr[1]) {
-				ColorColor = ColorColorCheck(args[i])
-				if !(Fonts(args[ArgsLen-1])) && outputFile == "" {
-					fmt.Println(args[ArgsLen-1], "is Not a valid font.")
-					os.Exit(0)
-				} else if !(Fonts(args[ArgsLen-1])) && outputFile != "" {
-					args = append(args, "standard")
-					ArgsLen = len(args)
-				} else if i == 0 {
-					Str = args[i+1]
-					// Str = append(Str,args[i+1])
+					if i+2 < ArgsLen {
+						haha = append(haha[:num], haha[num+2:]...)
+						num = num - 2
+					} else {
+						haha = haha[:num+1]
+					}
 				}
 				help = help + 1
 			}
@@ -139,24 +126,60 @@ func main() {
 		fmt.Println("Error: Invalid arguments.")
 		return
 	}
+	ArgsLen = len(haha)
+	// fmt.Println(haha, "4")
+	if ArgsLen == 0 && Str != "" {
+		haha = append(haha, Str)
+		haha = append(haha, "standard")
+		ArgsLen = len(haha)
+		Str = ""
+	} else if ArgsLen == 0 && Str == "" {
+		
+		haha = append(haha, os.Args[1])
+		haha = append(haha, "standard")
+		ArgsLen = len(haha)
+	} else if ArgsLen == 1 {
+		if Str != "" && Fonts(haha[ArgsLen-1]) {
+			lol := haha[ArgsLen-1]
+			haha[ArgsLen-1] = Str
+			haha = append(haha, lol)
+			fmt.Println(haha)
+			Str = ""
+			font = lol
+		} else {
+			// fmt.Println("1",haha)
+		haha = append(haha, "standard")
+		}
+		
+		ArgsLen = len(haha)
+	} else if ArgsLen == 2 {
+		font = haha[ArgsLen-1]
+		if Fonts(haha[ArgsLen-1]) {
+			font = haha[ArgsLen-1]
 
-	for i := 0; i < ArgsLen; i++ {
+		} else {
+			fmt.Println("\""+font+"\"", "is Not a valid font.")
+			os.Exit(0)
+		}
+	} else {
+		fmt.Println("Error: Invalid arguments.", haha)
+		return
+	}
+	
+	for i := 0; i < len(args); i++ {
 		if !(asciiArtColor.IsValid(args[i])) {
 			fmt.Println(args[i], "isn't a valid character/argument.")
 			return
 		}
 	}
 
-	text = args[ArgsLen-2]
+	text = haha[ArgsLen-2]
 	if len(Str) > len(text) {
 		fmt.Println("the \"", Str, "\" should be less or equal than \"", text, "\".")
 		return
-	}
-	if Fonts(args[ArgsLen-1]) {
-		font = args[ArgsLen-1]
-	} else {
-		fmt.Println(font, "is Not a valid font.")
-		os.Exit(0)
+	} else if !(strings.Contains(text, Str)) {
+		fmt.Println("the string", "'"+text+"'", "should contains", "'"+Str+"'", "to Print.")
+		os.Exit(1)
 	}
 
 	// Read the content of the file
@@ -187,6 +210,7 @@ func main() {
 			argsArr = argsArr[:larg-1]
 		}
 	}
+
 	if outputFile != "" {
 		asciiArtColor.PrintBannersInFile(outputFile, argsArr, arr)
 	} else if ColorColor != "" {
@@ -194,6 +218,7 @@ func main() {
 	} else {
 		asciiArtColor.PrintBanners(argsArr, arr)
 	}
+
 }
 
 func Fonts(argFont string) bool {
@@ -213,44 +238,15 @@ func Fonts(argFont string) bool {
 
 // outputFile Error manegment.
 func outputFileCheck(output string) string {
-	outputFile := strings.Split(output, "--output=")
-	NameLen := len(outputFile)
-	ErrorMsg := "you should print the run like this example: \nEX: go run . --output=<fileName.txt> something standard."
-	outputFileName := ""
-	if outputFile[0] != "" {
-		fmt.Println(ErrorMsg)
+	outputFile := strings.TrimPrefix(output, "--output=")
+	if !strings.HasSuffix(outputFile, ".txt") {
+		fmt.Println("Output file name should end with .txt")
 		os.Exit(1)
-	} else if NameLen > 2 {
-		fmt.Println(ErrorMsg)
-		os.Exit(1)
-	} else if NameLen == 2 && outputFile[1] != "" {
-		outputFileName = outputFile[1]
-		lenlen := len(outputFileName)
-		if lenlen < 5 {
-			fmt.Println(outputFileName, "is Not a valid output File Name.")
-			os.Exit(1)
-		} else if !(outputFileName[lenlen-1] == 't' && outputFileName[lenlen-2] == 'x' && outputFileName[lenlen-3] == 't' && outputFileName[lenlen-4] == '.') {
-			fmt.Println("output File Name should end with <.txt> .")
-			os.Exit(1)
-		}
 	}
-	outputFileName = outputFile[1]
-	return outputFileName
+	return outputFile
 }
 
 func ColorColorCheck(color string) string {
-	textColor := strings.Split(color, "--color=")
-	NameLen := len(textColor)
-	ErrorMsg := "you should print the run like this example: \nEX: go run . --color=<fileName.txt> something standard."
-	colors := ""
-	if textColor[0] != "" {
-		fmt.Println(ErrorMsg)
-		os.Exit(1)
-	} else if NameLen > 2 {
-		fmt.Println(ErrorMsg)
-		os.Exit(1)
-	} else if NameLen == 2 && textColor[1] != "" {
-		colors = textColor[1]
-	}
-	return colors
+	textColor := strings.TrimPrefix(color, "--color=")
+	return textColor
 }

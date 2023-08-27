@@ -76,7 +76,7 @@ func HSLtoRGB(hsl string) []string {
 		b = x
 	case h >= 360:
 		fmt.Println("Error: Wrong number of hsl characters.")
-			os.Exit(0)
+		os.Exit(0)
 	}
 	R := int(math.Round((r + m) * 255))
 	G := int(math.Round((g + m) * 255))
@@ -138,7 +138,7 @@ func RGBtoNum(hex string) []string {
 				Crgb = append(Crgb, num)
 				num = ""
 			}
-		} else if (IsAlpha(string(hex[i]))) {
+		} else if IsAlpha(string(hex[i])) {
 			fmt.Println("Error: during rgp (wrong input).")
 			os.Exit(0)
 		} else if !(IsNumeric(string(hex[i]))) && !(IsAlpha(string(hex[i]))) && hex[i] != ',' {

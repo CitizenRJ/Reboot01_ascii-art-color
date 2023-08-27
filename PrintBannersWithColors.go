@@ -7,6 +7,7 @@ import (
 
 // Print the full outcome in the triminal
 func PrintBannersWithColors(Str, colors string, banners, arr []string) {
+	// fmt.Println(banners[9])
 	colors = strings.ToLower(colors)
 	num := 0
 	RGB := "rgb"
@@ -25,9 +26,6 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 		//this one for HSL to ansi nums.
 	} else if strings.HasPrefix(colors, HSL) {
 		color = HSLtoRGB(colors)
-	// } else if strings.HasPrefix(colors, ANSI) {
-		// colors = colors
-		// ANSICheck = true
 		//for ANSI
 	} else {
 		//for the left (word: red, green, blue, etc...).
@@ -36,6 +34,7 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 	if !(ANSICheck) {
 		colors = "\033[38;2;" + color[0] + ";" + color[1] + ";" + color[2] + "m"
 	}
+	// fmt.Println(banners,Str)
 	for _, ch := range banners {
 		num = num + 1
 		if ch == "" {
@@ -53,13 +52,42 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 					fmt.Print(colors, arr[int(n)+i])
 				}
 			} else {
+				h := 0
+				count := 0
+				match := false
 				for _, j := range ch {
+					if !match || count >= len(Str) {
+						h = h + 1
+					}
 					check := true
 					n := (j-32)*9 + 1
-					for _, kk := range Str {
-						if kk == j {
-							fmt.Print(colors, arr[int(n)+i])
-							check = false
+					for q := 0; q < len(Str); q++ {
+						
+						// fmt.Println(o,num)
+						// for _, kk := range Str {
+						if num+len(Str) > len(banners) {
+							// fmt.Println(1)
+							if rune(Str[q]) == j {
+								// fmt.Println(2)
+								word := strings.Join(banners, "")
+								// fmt.Println(word[num-1:num+len(Str)])
+								// fmt.Println(h,h+len(Str),word[h-1:(h+len(Str))])
+								// if h+len(Str) > h-1 {
+									if count < len(Str) {
+								if Str == word[h-1:h+len(Str)-1] || (match && count < len(Str)) {
+									match = true
+									count = count + 1
+									// if {
+									fmt.Print(colors, arr[int(n)+i])
+									check = false
+									// }
+									// if h
+									// fmt.Println(3)
+
+								}
+							}
+								// break
+							}
 						}
 					}
 					if check == true {
@@ -67,10 +95,22 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 					}
 
 				}
+				count = 0
 			}
 
-			fmt.Println()
+			fmt.Println("\033[0m")
 		}
 	}
+	// func print (s1,s2,color string) {
+	// 	for i := 0 ; i<8 , i++ {
+	// 		for k:=0 , k < len(s1) ; k++ {
+	// 			if s2[0] == s1[k] {
+	// 				if s2 == s1[k:k+s2] {
+	// 					fmt.print(colr,s1[k:k+s2])
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 	// fmt.Println(colors,"haha")
 }
