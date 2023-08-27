@@ -63,7 +63,7 @@ func main() {
 			} else if strings.Contains(args[i], StrFlagArr[1]) {
 				ColorColor = ColorColorCheck(args[i])
 				if !(Fonts(args[ArgsLen-1])) {
-					if i < ArgsLen -2 {
+					if i < ArgsLen-2 {
 						Str = args[i+1]
 						// Str = append(Str,args[i+1])
 					}
@@ -97,7 +97,7 @@ func main() {
 					ArgsLen = len(args)
 				} else if i == 0 {
 					Str = args[i+1]
-						// Str = append(Str,args[i+1])
+					// Str = append(Str,args[i+1])
 				}
 				help = help + 1
 			}
@@ -105,7 +105,7 @@ func main() {
 		if help == 0 {
 			fmt.Println("Error: Invalid arguments.")
 			return
-		} 
+		}
 	} else if ArgsLen == 5 {
 		help := 0
 		for i := 0; i < ArgsLen; i++ {
@@ -126,7 +126,7 @@ func main() {
 					ArgsLen = len(args)
 				} else if i == 0 {
 					Str = args[i+1]
-						// Str = append(Str,args[i+1])
+					// Str = append(Str,args[i+1])
 				}
 				help = help + 1
 			}
@@ -134,31 +134,31 @@ func main() {
 		if help == 0 {
 			fmt.Println("Error: Invalid arguments.")
 			return
-		} 
+		}
 	} else if ArgsLen > 5 {
 		fmt.Println("Error: Invalid arguments.")
-			return
+		return
 	}
 
-	for i:= 0; i < ArgsLen; i++ {
+	for i := 0; i < ArgsLen; i++ {
 		if !(asciiArtColor.IsValid(args[i])) {
-			fmt.Println(args[i],"isn't a valid character/argument.")
+			fmt.Println(args[i], "isn't a valid character/argument.")
 			return
 		}
-	} 
+	}
 
 	text = args[ArgsLen-2]
 	if len(Str) > len(text) {
-		fmt.Println("the \"", Str,"\" should be less or equal than \"", text, "\".")
-			return
+		fmt.Println("the \"", Str, "\" should be less or equal than \"", text, "\".")
+		return
 	}
-	if (Fonts(args[ArgsLen-1])) {
+	if Fonts(args[ArgsLen-1]) {
 		font = args[ArgsLen-1]
 	} else {
 		fmt.Println(font, "is Not a valid font.")
 		os.Exit(0)
 	}
-	
+
 	// Read the content of the file
 	text = strings.ReplaceAll(text, "\\t", "   ")
 	argsArr := strings.Split(strings.ReplaceAll(text, "\\n", "\n"), "\n")
@@ -195,8 +195,6 @@ func main() {
 		asciiArtColor.PrintBanners(argsArr, arr)
 	}
 }
-
-
 
 func Fonts(argFont string) bool {
 	// font := ""
