@@ -26,10 +26,11 @@ func main() {
 	haha := os.Args[1:]
 	// var color []string
 	if ArgsLen < 1 {
-		fmt.Println(len(os.Args), "is Not a valid amount of arguments.")
+		fmt.Println(len(os.Args), "is Not a valid amount of arguments.\n")
+		fmt.Println("Usage: go run . [STRING] [BANNER]\nEX: go run . something standard\n\n# Ascii Art output #\nUsage: go run . [OPTION] [STRING] [BANNER]\nEX: go run . --output=<fileName.txt> something standard\n\n# Ascii Art color #\nUsage: go run . [OPTION] [STRING]\nEX: go run . --color=<color> <letters to be colored> \"something\"")
 		return
 	} else if ArgsLen > 0 && ArgsLen < 3 {
-		fmt.Println("check")
+		// fmt.Println("check")
 		num := 0
 		help := 0
 		for i := 0; i < ArgsLen; i++ {
@@ -53,9 +54,9 @@ func main() {
 				ColorColor = ColorColorCheck(args[i])
 				if outputFile == "" {
 					if i+1 < ArgsLen {
-						fmt.Println("try",haha)
+						// fmt.Println("try",haha)
 						haha = append(haha[:num-1], haha[num:]...)
-						fmt.Println("try",haha)
+						// fmt.Println("try",haha)
 						num = num - 1
 					} else {
 						haha = haha[:num-1]
@@ -143,7 +144,7 @@ func main() {
 			lol := haha[ArgsLen-1]
 			haha[ArgsLen-1] = Str
 			haha = append(haha, lol)
-			fmt.Println(haha)
+			// fmt.Println(haha)
 			Str = ""
 			font = lol
 		} else {
@@ -218,7 +219,6 @@ func main() {
 	} else {
 		asciiArtColor.PrintBanners(argsArr, arr)
 	}
-
 }
 
 func Fonts(argFont string) bool {

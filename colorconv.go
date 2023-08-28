@@ -94,11 +94,11 @@ func HextoRGB(hex string) []string {
 		hex = hex[1:]
 	}
 	if len(hex) != 6 {
-		fmt.Println("Error: Wrong number of hex characters.")
+		fmt.Println("Errorf Wrong number of hex characters.")
 		os.Exit(0)
 	}
 	for i := 0; i < len(hex); i++ {
-		if !(hex[i] == '0' && hex[i] <= '9') && !(hex[i] == 'A' && hex[i] <= 'F') {
+		if !(hex[i] >= '0' && hex[i] <= '9') && !(hex[i] >= 'a' && hex[i] <= 'f') {
 			fmt.Println("Error: Wrong number of hex characters.")
 			os.Exit(0)
 		}
