@@ -118,10 +118,12 @@ func main() {
 		}
 		if help == 0 {
 			fmt.Println("Error: Invalid arguments.")
+			fmt.Println("Usage: go run . [STRING] [BANNER]\nEX: go run . something standard\n\n# Ascii Art output #\nUsage: go run . [OPTION] [STRING] [BANNER]\nEX: go run . --output=<fileName.txt> something standard\n\n# Ascii Art color #\nUsage: go run . [OPTION] [STRING]\nEX: go run . --color=<color> <letters to be colored> \"something\"")
 			return
 		}
 	} else if ArgsLen > 5 {
 		fmt.Println("Error: Invalid arguments.")
+		fmt.Println("Usage: go run . [STRING] [BANNER]\nEX: go run . something standard\n\n# Ascii Art output #\nUsage: go run . [OPTION] [STRING] [BANNER]\nEX: go run . --output=<fileName.txt> something standard\n\n# Ascii Art color #\nUsage: go run . [OPTION] [STRING]\nEX: go run . --color=<color> <letters to be colored> \"something\"")
 		return
 	}
 	ArgsLen = len(haha)
@@ -159,6 +161,7 @@ func main() {
 		}
 	} else {
 		fmt.Println("Error: Invalid arguments.", haha)
+		fmt.Println("Usage: go run . [STRING] [BANNER]\nEX: go run . something standard\n\n# Ascii Art output #\nUsage: go run . [OPTION] [STRING] [BANNER]\nEX: go run . --output=<fileName.txt> something standard\n\n# Ascii Art color #\nUsage: go run . [OPTION] [STRING]\nEX: go run . --color=<color> <letters to be colored> \"something\"")
 		return
 	}
 	
