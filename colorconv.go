@@ -49,6 +49,10 @@ func HSLtoRGB(hsl string) []string {
 	x := c * (float64(1) - math.Abs(math.Mod(float64(h)/60, 2)-float64(1)))
 	m := l2 - c/2
 	var r, g, b float64
+	if s2 > 1 || l2 > 1 {
+		fmt.Println("Error: Wrong number of hsl characters.")
+		os.Exit(0)
+	}
 	switch {
 	case h < 60:
 		r = c
