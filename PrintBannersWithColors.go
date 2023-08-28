@@ -34,7 +34,6 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 	if !(ANSICheck) {
 		colors = "\033[38;2;" + color[0] + ";" + color[1] + ";" + color[2] + "m"
 	}
-	// fmt.Println(banners,Str)
 	for _, ch := range banners {
 		num = num + 1
 		if ch == "" {
@@ -62,55 +61,29 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 					check := true
 					n := (j-32)*9 + 1
 					for q := 0; q < len(Str); q++ {
-						
-						// fmt.Println(o,num)
-						// for _, kk := range Str {
 						if num+len(Str) > len(banners) {
-							// fmt.Println(1)
 							if rune(Str[q]) == j {
-								// fmt.Println(2)
-								word := strings.Join(banners, "")
-								// fmt.Println(word[num-1:num+len(Str)])
-								// fmt.Println(h,h+len(Str),word[h-1:(h+len(Str))])
-								// if h+len(Str) > h-1 {
-									if count < len(Str) {
-								if Str == word[h-1:h+len(Str)-1] || (match && count < len(Str)) {
-									match = true
-									count = count + 1
-									// if {
-									fmt.Print(colors, arr[int(n)+i])
-									check = false
-									// }
-									// if h
-									// fmt.Println(3)
-
+								word := ch
+								if count < len(Str) {
+									if Str == word[h-1:h+len(Str)-1] || (match && count < len(Str)) {
+										match = true
+										count = count + 1
+										// if {
+										fmt.Print(colors, arr[int(n)+i])
+										check = false
+									}
+									break
 								}
-							}
-								// break
 							}
 						}
 					}
 					if check == true {
 						fmt.Print("\033[0m", arr[int(n)+i])
 					}
-
 				}
 				count = 0
 			}
-
 			fmt.Println("\033[0m")
 		}
 	}
-	// func print (s1,s2,color string) {
-	// 	for i := 0 ; i<8 , i++ {
-	// 		for k:=0 , k < len(s1) ; k++ {
-	// 			if s2[0] == s1[k] {
-	// 				if s2 == s1[k:k+s2] {
-	// 					fmt.print(colr,s1[k:k+s2])
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
-	// fmt.Println(colors,"haha")
 }
