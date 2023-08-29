@@ -55,13 +55,14 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 				count := 0
 				match := false
 				for _, j := range ch {
+					
 					if !match || count >= len(Str) {
 						h = h + 1
 					}
+					
 					check := true
 					n := (j-32)*9 + 1
 					for q := 0; q < len(Str); q++ {
-						if num+len(Str) > len(banners) {
 							if rune(Str[q]) == j {
 								word := ch
 								if count < len(Str) {
@@ -75,7 +76,6 @@ func PrintBannersWithColors(Str, colors string, banners, arr []string) {
 									break
 								}
 							}
-						}
 					}
 					if check == true {
 						fmt.Print("\033[0m", arr[int(n)+i])
